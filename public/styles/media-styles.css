@@ -113,6 +113,15 @@
     .title-heading h1 {
         font-size: 2.5rem;
     }
+
+    .date-selector-item {
+        padding: 2rem 2rem 0;
+        width: 50%;
+    }
+
+    #date-selector {
+        display: flex;
+    }
 }
 
 @media screen and (min-width: 950px) {

@@ -10,27 +10,19 @@
     in this section you will see the evolution of COVID-19 in Romania based on different applied filters
 {% endblock %}
 
+{% set filters = {'byCases': 'by cases', 'byVaccines': ' by vaccines administered', 'byIncidence': 'by incidence rate'} %}
+
 {% block content %}
+    <div class="title-heading">
+        {% if filter is not empty %}
+        <h3>Data is shown</h3>
+        <h1>{{filters[filter]}}</h1>
+        <p>you can select another filter </p>
+        {% endif %}
+    </div>
+
     <div id="filters">
         <div class="container">
-            <div id="cases-selector">
-                <label for="cases-filters">Select a filter</label>
-                <select name="cases-filters" id="cases-filters">
-                    <option value="" selected disabled hidden>Choose one of the options</option>
-                    <option value="byActive">Number of active cases</option>
-                    <option value="byHealed">Number of healed cases</option>
-                    <option value="byDeceased">Number of deceased cases</option>
-                </select>
-            </div>
-            <div id="type-selector">
-                <label for="type-filters">Select a type</label>
-                <select name="type-filters" id="type-filters">
-                    <option value="" selected disabled hidden>Choose one of the options</option>
-                    <option value="byActive">Number of active cases</option>
-                    <option value="byHealed">Number of healed cases</option>
-                    <option value="byDeceased">Number of deceased cases</option>
-                </select>
-            </div>
             <div id="date-selector">
                 <div class="date-selector-item">
                     <label for="starting-period">Choose a starting period</label>

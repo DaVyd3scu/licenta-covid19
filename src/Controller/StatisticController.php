@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StatisticController extends AbstractController
 {
-    const STATISTIC_FILTER = [ 'byCases', 'byVaccines', 'byIncidence'];
+    const STATISTIC_FILTER = [ 'byCases', 'byVaccines', 'byIncidence' ];
     const TYPE_OF_FILTER = [ 'byActive', 'byHealed', 'byDeceased' ];
 
     /**
@@ -24,7 +24,7 @@ class StatisticController extends AbstractController
         }
 
         return $this->render('statistic/index.html.twig', [
-
+            'filter' => $statisticFilter
         ]);
     }
 }
