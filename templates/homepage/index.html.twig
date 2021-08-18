@@ -1,20 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomepageController!{% endblock %}
+{% block title %}Home{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block display_current %} current{% endblock %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{% block smaller_title %}The transmission dynamics of{% endblock %}
+{% block bigger_title %}sars-cov-2 in romania{% endblock %}
+{% block title_description %}
+    application for monitoring COVID-19 transmission in Romania
+{% endblock %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/licenta-covid19/src/Controller/HomepageController.php'|file_link(0) }}">src/Controller/HomepageController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/licenta-covid19/templates/homepage/index.html.twig'|file_link(0) }}">templates/homepage/index.html.twig</a></code></li>
-    </ul>
-</div>
+{% block content %}
+    <div class="title-heading">
+        <h3>Choose</h3>
+        <h1>One option</h1>
+        <p>you can choose one of the following categories</p>
+    </div>
+
+    <div class="categories-grid">
+        <!-- grid item 1 -->
+        <div class="categories-grid-item statistic">
+            <i class="fas fa-chart-line"></i>
+            <a href="{{ path('statistic') }}">
+                <h1>Statistical Data</h1>
+                <p>Check the number of cases by applying different filters. This is updated daily.</p>
+            </a>
+        </div>
+        <!-- grid item 2 -->
+        <div class="categories-grid-item predictions">
+            <i class="fas fa-question"></i>
+            <a href="{{ path('prediction') }}">
+                <h1>Predictions</h1>
+                <p>Based on the existing data, predictions can be generated regarding the
+                    number of infected/deceased people and depending on what situation is applied
+                (eg. total lockdown, partial restrictions...)</p>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block quotes %}
+    <section class="quotes">
+        <div class="container">
+            <div class="quote">
+                <div class="quote-text-box">
+                    <p>Be safe, be smart, be kind.</p>
+                    <i class="fas fa-quote-right"></i>
+                </div>
+                <div class="quote-author">
+                    <img src="{{ asset('images/quote-img.jpg') }}" alt="">
+                    <h1>Dr. Tedros Adhanom Ghebreyesus, WHO Director General</h1>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

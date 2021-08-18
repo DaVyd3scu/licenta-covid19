@@ -1,4 +1,25 @@
 {
+    "amphp/amp": {
+        "version": "v2.5.2"
+    },
+    "amphp/byte-stream": {
+        "version": "v1.8.1"
+    },
+    "amphp/parallel": {
+        "version": "v1.4.0"
+    },
+    "amphp/parser": {
+        "version": "v1.0.0"
+    },
+    "amphp/process": {
+        "version": "v1.1.1"
+    },
+    "amphp/serialization": {
+        "version": "v1.0.0"
+    },
+    "amphp/sync": {
+        "version": "v1.4.0"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
     },
@@ -127,6 +148,12 @@
     "psr/log": {
         "version": "1.1.4"
     },
+    "rubix/ml": {
+        "version": "1.0.3"
+    },
+    "rubix/tensor": {
+        "version": "2.2.3"
+    },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
         "recipe": {
@@ -137,6 +164,18 @@
         },
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
+        ]
+    },
+    "symfony/apache-pack": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "71599f5b0fdeeeec0fb90e9b17c85e6f5e1350c1"
+        },
+        "files": [
+            "./public/.htaccess"
         ]
     },
     "symfony/asset": {
@@ -363,6 +402,9 @@
     "symfony/polyfill-php80": {
         "version": "v1.22.1"
     },
+    "symfony/polyfill-php81": {
+        "version": "v1.23.0"
+    },
     "symfony/process": {
         "version": "v5.2.7"
     },
@@ -514,6 +556,15 @@
     },
     "twig/twig": {
         "version": "v3.3.2"
+    },
+    "voku/portable-ascii": {
+        "version": "1.5.6"
+    },
+    "voku/portable-utf8": {
+        "version": "5.4.51"
+    },
+    "wamania/php-stemmer": {
+        "version": "v2.2.0"
     },
     "webmozart/assert": {
         "version": "1.10.0"

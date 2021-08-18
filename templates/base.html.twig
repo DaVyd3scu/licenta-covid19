@@ -1,15 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Hello!{% endblock %}</title>
-        {% block stylesheets %}
-        {% endblock %}
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{% block title %}{% endblock %}</title>
+        {% block icon %}<link rel="icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">{% endblock %}
 
-        {% block javascripts %}
-        {% endblock %}
+        <!-- Stylesheets -->
+        <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Aldrich&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('styles/styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('styles/media-styles.css') }}">
+
+        <!-- Scripts -->
+        <script src="https://kit.fontawesome.com/9bb846b8cc.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        {% block body %}{% endblock %}
+    <!-- Begin header -->
+        <header>
+            <div class="container">
+                <nav>
+                    <div class="nav-brand">
+                        <a href="{{ path('homepage') }}">
+                            <img src="{{ asset('images/logo.png') }}" alt="Logo">
+                        </a>
+                    </div>
+
+                    <div class="menu-icons open">
+                        <i class="fas fa-bars"></i>
+                    </div>
+
+                    <ul class="nav-list">
+                        <div class="menu-icons close">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <li class="nav-item">
+                            <a href="{{ path('homepage') }}" class="nav-link{% block display_current %}{% endblock %}">
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link{% block display_current1 %}{% endblock %}">
+                                Statistical data&nbsp;<i class="fas fa-caret-right"></i>
+                                <div class="sub-nav-list">
+                                    <div class="nav-item first-item">
+                                        <div class="dropdown-button">
+                                            <a href="#" class="nav-link">
+                                                By Cases&nbsp;<i class="fas fa-caret-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-content">
+                                        <ul class="sub-sub-nav-list">
+                                            <li class="nav-item">
+                                                <a href="{{ path('statistic', {statisticFilter: 'byCases', typeOfFilter: 'byActive'}) }}" class="nav-link">
+                                                    Active Cases
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ path('statistic', {statisticFilter: 'byCases', typeOfFilter: 'byHealed'}) }}" class="nav-link">
+                                                    Healed Cases
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ path('statistic', {statisticFilter: 'byCases', typeOfFilter: 'byDeceased'}) }}" class="nav-link">
+                                                    Deceased Cases
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="nav-item">
+                                        <a href="{{ path('statistic', {statisticFilter: 'byVaccines'}) }}" class="nav-link">
+                                            Vaccines Administered
+                                        </a>
+                                    </div>
+                                    <div class="nav-item">
+                                        <a href="{{ path('statistic', {statisticFilter: 'byIncidence'}) }}" class="nav-link">
+                                            Incidence Rate
+                                        </a>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('prediction') }}" class="nav-link{% block display_current2 %}{% endblock %}">
+                                Predictions
+                            </a>
+                        </li>
+{#                        <li class="nav-item">#}
+{#                            <a href="#" class="nav-link{% block display_current3 %}{% endblock %}">#}
+{#                                Login#}
+{#                            </a>#}
+{#                        </li>#}
+{#                        <li class="nav-item">#}
+{#                            <a href="#" class="nav-link{% block display_current4 %}{% endblock %}">#}
+{#                                About#}
+{#                            </a>#}
+{#                        </li>#}
+                    </ul>
+                </nav>
+            </div>
+        </header>
+            <!-- End header -->
+        <main>
+            <!-- Background image by
+            <a href="https://pixabay.com/users/piro4d-2707530/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4937553">
+                PIRO4D</a> from
+            <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4937553">
+            Pixabay</a> -->
+            <section class="main-title">
+                <div class="container">
+                    <div class="main-message">
+                        <h3>{% block smaller_title %}{% endblock %}</h3>
+                        <h1>{% block bigger_title %}{% endblock %}</h1>
+                        <p>{% block title_description %}{% endblock %}</p>
+                    </div>
+                </div>
+            </section>
+            <section class="categories-section">
+                <div class="container">
+                    {% block content %}{% endblock %}
+                </div>
+            </section>
+
+            {% block quotes %} {% endblock %}
+
+            <section class="official-sources-news">
+                <div class="container">
+                    <div class="title-heading">
+                        <h3>If you have COVID-19 symptoms</h3>
+                        <h1>Stay home, stay safe.</h1>
+                        <p>Get your information only from trusted sources. See some of them below.</p>
+                    </div>
+
+                    <div class="sources-grid">
+                        <!-- Grid item 1 -->
+                        <div class="official-source=grid-item">
+                            <p>World Health Organization</p>
+                            <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" class="btn" target="_blank">Access</a>
+                        </div>
+                        <!-- Grid item 2 -->
+                        <div class="official-source=grid-item">
+                            <p>Official News about COVID-19 in Romania</p>
+                            <a href="https://stirioficiale.ro/informatii" class="btn" target="_blank">Access</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy;2021 Popovici George-David</p>
+        </footer>
+
+        <!-- scripts -->
+        <script type="text/javascript" src="{{ asset('scripts/jquery-3.6.0.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('scripts/scripts.js') }}"></script>
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     </body>
 </html>

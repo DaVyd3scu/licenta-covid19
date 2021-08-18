@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistical Data{% endblock %}
+
+{% block display_current1 %} current{% endblock %}
+
+{% block smaller_title %} Graphical evolution of {% endblock %}
+{% block bigger_title %} sars-cov-2 in romania {% endblock %}
+{% block title_description %}
+    in this section you will see the evolution of COVID-19 in Romania based on different applied filters
+{% endblock %}
+
+{% block content %}
+    <div id="filters">
+        <div class="container">
+            <div id="cases-selector">
+                <label for="cases-filters">Select a filter</label>
+                <select name="cases-filters" id="cases-filters">
+                    <option value="" selected disabled hidden>Choose one of the options</option>
+                    <option value="byActive">Number of active cases</option>
+                    <option value="byHealed">Number of healed cases</option>
+                    <option value="byDeceased">Number of deceased cases</option>
+                </select>
+            </div>
+            <div id="type-selector">
+                <label for="type-filters">Select a type</label>
+                <select name="type-filters" id="type-filters">
+                    <option value="" selected disabled hidden>Choose one of the options</option>
+                    <option value="byActive">Number of active cases</option>
+                    <option value="byHealed">Number of healed cases</option>
+                    <option value="byDeceased">Number of deceased cases</option>
+                </select>
+            </div>
+            <div id="date-selector">
+                <div class="date-selector-item">
+                    <label for="starting-period">Choose a starting period</label>
+                    <input type="date" name="starting-period" id="starting-period">
+                </div>
+
+                <div class="date-selector-item">
+                    <label for="ending-period">Choose an ending period</label>
+                    <input type="date" name="ending-period" id="ending-period">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="map-display"></div>
+{% endblock %}

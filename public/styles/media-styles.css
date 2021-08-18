@@ -1,0 +1,140 @@
+/*
+ * Media queries
+ */
+@media screen and (min-width: 350px) {
+    .main-message {
+        transform: translateY(40%);
+    }
+}
+
+@media screen and (min-width: 470px) {
+    .main-title::before {
+        height: 9.4rem;
+        background: url("../images/wave-medium.png");
+        background-size: cover;
+    }
+
+    .quotes::before {
+        height: 9.4rem;
+        background: url("../images/wave-medium-reversed.png");
+        background-size: cover;
+    }
+}
+
+@media screen and (min-width: 700px) {
+    header {
+        height: 8rem;
+    }
+
+    .nav-brand {
+        width: 3.5rem;
+    }
+
+    .nav-list {
+        width: initial;
+        height: initial;
+        background-color: transparent;
+        position: initial;
+        top: initial;
+        right: initial;
+        flex-direction: row;
+        transition: initial;
+    }
+
+    .sub-nav-list {
+        position: absolute;
+    }
+
+    .sub-sub-nav-list {
+        padding-left: 15px;
+    }
+
+    .sub-nav-list > .nav-item {
+        padding-bottom: 20px;
+    }
+
+    .first-item {
+        padding-top: 25px;
+    }
+
+    .dropdown-content {
+        position: absolute;
+        left: 200px;
+        top: 24px;
+    }
+
+    .sub-sub-nav-list .nav-item {
+        width: 100%;
+        padding-bottom: 15px;
+    }
+
+    .menu-icons {
+        display: none;
+    }
+    .nav-item {
+        margin: 0 2.5rem;
+    }
+
+    .nav-link, .current {
+        color: #fafafa;
+        position: relative;
+        font-size: 1.3rem;
+    }
+
+    .nav-link::before, .current::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -.5rem;
+        background-color: #eb648c;
+        width: 100%;
+        height: 2px;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 650ms;
+    }
+
+    .current::before {
+        transform: scaleX(1);
+    }
+
+    .nav-link:hover::before {
+        transform: scaleX(1);
+    }
+
+    .main-title {
+        height: 60vh;
+    }
+
+    .main-message {
+        transform: translateY(50%);
+    }
+
+    .title-heading h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media screen and (min-width: 950px) {
+    .main-title::before {
+        height: 22.7rem;
+        background: url("../images/wave-large.png");
+        background-size: cover;
+    }
+
+    .quotes::before {
+        height: 22.7rem;
+        background: url("../images/wave-large-reversed.png");
+        background-size: cover;
+    }
+
+    .quote {
+        top: 70%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .main-title {
+        height: 75vh;
+    }
+}
