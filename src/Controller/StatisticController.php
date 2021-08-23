@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class StatisticController extends AbstractController
 {
@@ -14,13 +15,20 @@ class StatisticController extends AbstractController
     /**
      * @Route("/statistic/{statisticFilter}/{typeOfFilter}", name="statistic")
      */
-    public function index(string $statisticFilter = 'byCases', string $typeOfFilter = null): Response
+    public function index(string $statisticFilter = null, string $typeOfFilter = null): Response
     {
         if (
-            !in_array($statisticFilter, self::STATISTIC_FILTER) ||
+            (!in_array($statisticFilter, self::STATISTIC_FILTER) && $statisticFilter !== null) ||
             ($typeOfFilter && !in_array($typeOfFilter, self::TYPE_OF_FILTER))
         ) {
             return $this->render('errors/error404.html.twig');
+        }
+
+        if ($statisticFilter === self::STATISTIC_FILTER[0] && $typeOfFilter === null) {
+            return $this->redirectToRoute('statistic', [
+                'statisticFilter' => $statisticFilter,
+                'typeOfFilter' => self::TYPE_OF_FILTER[0]
+            ]);
         }
 
         return $this->render('statistic/index.html.twig', [
