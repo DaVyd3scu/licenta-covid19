@@ -13,12 +13,13 @@ use Doctrine\ORM\Mapping\Entity;
 class IncidenceRate
 {
     /**
-     * @var DateTime
+     * @var int
      *
-     * @ORM\Id()
-     * @ORM\Column(type="date")
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
-    private $date;
+    private $id;
 
     /**
      * @var County
@@ -29,9 +30,49 @@ class IncidenceRate
     private $county;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="incidence_rate", type="integer")
+     * @ORM\Column(name="incidence_rate", type="float")
      */
     private $incidenceRate;
+
+    /**
+     * @return County
+     */
+    public function getCounty(): County
+    {
+        return $this->county;
+    }
+
+    /**
+     * @param County $county
+     *
+     * @return IncidenceRate
+     */
+    public function setCounty(County $county): IncidenceRate
+    {
+        $this->county = $county;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getIncidenceRate(): float
+    {
+        return $this->incidenceRate;
+    }
+
+    /**
+     * @param float $incidenceRate
+     *
+     * @return IncidenceRate
+     */
+    public function setIncidenceRate(float $incidenceRate): IncidenceRate
+    {
+        $this->incidenceRate = $incidenceRate;
+
+        return $this;
+    }
 }

@@ -4,6 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    app.date_la_zi_api_url: 'https://d35p9e4fm9h3wo.cloudfront.net/latestData.json'
+    app.geo_spatial_covid_api_url: 'https://covid19.geo-spatial.org/api/dashboard/getDailyCaseReport'
+    app.romania_counties_file: '%kernel.project_dir%/public/files/list-counties-romania.csv'
 
 services:
     # default configuration for services in *this* file

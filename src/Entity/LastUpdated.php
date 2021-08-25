@@ -13,9 +13,17 @@ use Doctrine\ORM\Mapping\Entity;
 class LastUpdated
 {
     /**
+     * @var int
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
      * @var DateTime
      *
-     * @ORM\Id()
      * @ORM\Column(name="last_update", type="datetime")
      */
     private $lastUpdate;

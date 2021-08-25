@@ -11,9 +11,17 @@ use Doctrine\ORM\Mapping as ORM;
 class Vaccines
 {
     /**
-     * @var DateTime
+     * @var int
      *
      * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @var DateTime
+     *
      * @ORM\Column(type="date")
      */
     private $date;

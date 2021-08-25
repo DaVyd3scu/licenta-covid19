@@ -11,9 +11,17 @@ use Doctrine\ORM\Mapping as ORM;
 class Cases
 {
     /**
-     * @var DateTime
+     * @var int
      *
      * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @var DateTime
+     *
      * @ORM\Column(type="date")
      */
     private $date;
@@ -34,13 +42,14 @@ class Cases
     }
 
     /**
-     * @param mixed $date
+     * @param DateTime $date
      *
      * @return $this
      */
-    public function setDate($date): self
+    public function setDate(DateTime $date): self
     {
         $this->date = $date;
+
         return $this;
     }
 

@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="App\Repository\Cases\DeceasedCasesRepository")
  * @ORM\Table(name="deceased_cases")
  */
 class DeceasedCases extends Cases
