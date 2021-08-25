@@ -38,9 +38,13 @@ class ImportDataCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $output->writeln('<info>===========> Importing data <===========</info>');
+
         $this->importService->insertDataIntoDatabase($output);
 
-        $output->writeln('<info>====> Data has been successfully inserted into database. <====</info>');
+        $output->writeln(
+            '<info>===========> Data has been successfully inserted into database. <===========</info>'
+        );
 
         return $this::SUCCESS;
     }

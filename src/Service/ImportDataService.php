@@ -268,36 +268,23 @@ class ImportDataService
                 // Insert data for Pfizer
                 if ($vaccine === 'pfizer') {
                     $vaccineObject = new PfizerVaccine();
-
-                    $vaccineObject->setDate($date)
-                        ->setCurrentDayNumberOfDoses($info["total_administered"])
-                        ->setPeopleImmunized($info["immunized"]);
                 }
                 // Insert data for Moderna
                 if ($vaccine === 'moderna') {
                     $vaccineObject = new ModernaVaccine();
-
-                    $vaccineObject->setDate($date)
-                        ->setCurrentDayNumberOfDoses($info["total_administered"])
-                        ->setPeopleImmunized($info["immunized"]);
                 }
                 // Insert data for Astra Zeneca
                 if ($vaccine === 'astra_zeneca') {
                     $vaccineObject = new AstraZenecaVaccine();
-
-                    $vaccineObject->setDate($date)
-                        ->setCurrentDayNumberOfDoses($info["total_administered"])
-                        ->setPeopleImmunized($info["immunized"]);
                 }
                 // Insert data for Johnson and Johnson
                 if ($vaccine === 'johnson_and_johnson') {
                     $vaccineObject = new JohnsonAndJohnsonVaccine();
-
-                    $vaccineObject->setDate($date)
-                        ->setCurrentDayNumberOfDoses($info["total_administered"])
-                        ->setPeopleImmunized($info["immunized"]);
                 }
 
+                $vaccineObject->setDate($date)
+                    ->setCurrentDayNumberOfDoses($info["total_administered"])
+                    ->setPeopleImmunized($info["immunized"]);
                 $this->entityManager->persist($vaccineObject);
             }
         }
@@ -309,8 +296,6 @@ class ImportDataService
     private function insertIncidenceByCounty(array $data)
     {
         if ($data["incidence"]) {
-            $date = DateTime::createFromFormat('Y-m-d', $data["parsedOnString"]);
-
             foreach ($data["incidence"] as $code => $incidenceNumber) {
                 $incidence = new IncidenceRate();
 
