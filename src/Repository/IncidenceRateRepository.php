@@ -18,4 +18,23 @@ class IncidenceRateRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, IncidenceRate::class);
     }
+
+    /**
+     * @return array
+     */
+    public function getIncidenceArray(): array
+    {
+        $results = $this->findAll();
+        $dataToBeReturned = [];
+
+        foreach ($results as $result) {
+            $code = $result->getCounty()->getCode();
+            $name = $result->getCounty()->getName();
+            $incidenceRate = $result->getIncidenceRate();
+
+            $dataToBeReturned[$code] = [$name => $incidenceRate];
+        }
+
+        return $dataToBeReturned;
+    }
 }

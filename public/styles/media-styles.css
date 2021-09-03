@@ -119,6 +119,10 @@
         width: 50%;
     }
 
+    .county-selector-item, .vaccine-selector-item {
+        padding: 0 2rem;
+    }
+
     #date-selector {
         display: flex;
     }

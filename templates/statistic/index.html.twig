@@ -10,19 +10,48 @@
     in this section you will see the evolution of COVID-19 in Romania based on different applied filters
 {% endblock %}
 
-{% set filters = {'byCases': 'by cases', 'byVaccines': ' by vaccines administered', 'byIncidence': 'by incidence rate'} %}
+{% set filters = {'byCases': 'cases', 'byVaccines': 'vaccines administered', 'byIncidence': 'incidence rate'} %}
+{% set typesOfFilters = {'byActive': 'active', 'byHealed': 'healed', 'byDeceased': 'deceased'} %}
 
 {% block content %}
     <div class="title-heading">
         {% if filter is not empty %}
         <h3>Data is shown</h3>
-        <h1>{{filters[filter]}}</h1>
-        <p>you can select another filter </p>
+        <h1>by {{filters[filter]}}</h1>
+        <p>you can select another filter from menu</p>
         {% endif %}
     </div>
 
     <div id="filters">
         <div class="container">
+            {% if typeOfFilter is same as('byActive') %}
+            <div id="county-selector">
+                <div class="county-selector-item">
+                    <label for="counties">Choose a county</label>
+                    <select id="counties">
+                        <option value="" hidden selected>Select a county to retrieve data</option>
+                        {% for key, county in counties %}
+                        <option value="{{ county[key].code }}">{{ county[key].name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            {% endif %}
+            {% if filter is same as 'byVaccines' %}
+            <div id="vaccine-selector">
+                <div class="vaccine-selector-item">
+                    <label for="vaccines">Choose a type of vaccine</label>
+                    <select id="vaccines">
+                        <option value="" hidden selected>Select a type of vaccine to retrieve data</option>
+                        <option value="astra-zeneca">Astra Zeneca</option>
+                        <option value="johnson-and-johnson">Johnson and Johnson</option>
+                        <option value="moderna">Moderna</option>
+                        <option value="pfizer">Pfizer</option>
+                    </select>
+                </div>
+            </div>
+            {% endif %}
+            {% if filter is not same as('byIncidence') %}
             <div id="date-selector">
                 <div class="date-selector-item">
                     <label for="starting-period">Choose a starting period</label>
@@ -34,8 +63,262 @@
                     <input type="date" name="ending-period" id="ending-period">
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 
+    {% if counties is not empty %}
     <div id="map-display"></div>
+    {% endif %}
+    <div>
+        <canvas id="chart-display"></canvas>
+    </div>
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/maps.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/geodata/romaniaLow.js"></script>
+
+<script>
+{% if typeOfFilter is same as 'byActive' or filter is same as 'byIncidence' %}
+// Create map instance
+let chart = am4core.create("map-display", am4maps.MapChart);
+
+// Set map definition
+chart.geodata = am4geodata_romaniaLow;
+
+// Set projection
+chart.projection = new am4maps.projections.Miller();
+
+// Create map polygon series
+let polygonSeries = new am4maps.MapPolygonSeries();
+// Make map load polygon (like country names) data from GeoJSON
+polygonSeries.useGeodata = true;
+
+chart.series.push(polygonSeries);
+
+// Configure series
+let polygonTemplate = polygonSeries.mapPolygons.template;
+polygonTemplate.fill = am4core.color("#74B266");
+
+// Create hover state and set alternative fill color
+let hs = polygonTemplate.states.create("hover");
+hs.properties.fill = am4core.color("#367B25");
+
+{% if activeCasesCounty is not empty %}
+polygonSeries.data = [
+    {% for key, case in activeCasesCounty %}
+    {
+        "id": 'RO-{{ key }}',
+        "name": '{{ case|keys[0] }}',
+        "value": {{ case[case|keys[0]] }}
+    },
+    {% endfor %}
+]
+polygonTemplate.tooltipText = "{name}\nTotal confirmed cases: {value}";
+{% elseif incidenceRate is not empty %}
+polygonSeries.data = [
+    {% for key, case in incidenceRate %}
+    {
+        "id": 'RO-{{ key }}',
+        "name": '{{ case|keys[0] }}',
+        "value": {{ case[case|keys[0]] }}
+    },
+    {% endfor %}
+]
+polygonTemplate.tooltipText = "{name}\nIncidence rate: {value}";
+{% endif %}
+{% endif %}
+/**
+ * Statistical data
+ */
+let startingPeriod = $("#starting-period");
+let endingPeriod = $("#ending-period");
+let counties = $("#counties");
+let mapDisplay = $("#map-display");
+let vaccines = $("#vaccines");
+let splineChart;
+
+{% if cases is not empty %}
+drawGraphics(JSON.parse('{{ cases|raw }}'))
+{% endif %}
+
+{% if vaccines is not empty %}
+let vaccinesArray = [];
+let vaccinesFullData = JSON.parse('{{ vaccines|raw }}');
+let data;
+
+for (let vaccine in vaccinesFullData) {
+    let vaccineObj = {
+        typeOfVaccine: vaccine,
+        dates: [],
+        dosesAdministered: []
+    }
+    for (let date in vaccinesFullData[vaccine]) {
+        vaccineObj.dates.push(date);
+        vaccineObj.dosesAdministered.push(vaccinesFullData[vaccine][date])
+    }
+    vaccinesArray.push(vaccineObj)
+}
+
+data = {
+    labels: vaccinesArray[0].dates,
+    datasets: [{
+        label: 'Number of doses administered for Astra Zeneca vaccine',
+        data: vaccinesArray[0].dosesAdministered,
+        fill: false,
+        borderColor: 'rgb(14,160,160)',
+        tension: 0.1
+    }, {
+        label: 'Number of doses administered for Johnson and Johnson vaccine',
+        data: vaccinesArray[1].dosesAdministered,
+        fill: false,
+        borderColor: 'rgb(7,37,153)',
+        tension: 0.1
+    }, {
+        label: 'Number of doses administered for Moderna vaccine',
+        data: vaccinesArray[2].dosesAdministered,
+        fill: false,
+        borderColor: 'rgb(151,13,52)',
+        tension: 0.1
+    }, {
+        label: 'Number of doses administered for Pfizer vaccine',
+        data: vaccinesArray[3].dosesAdministered,
+        fill: false,
+        borderColor: 'rgb(39,108,14)',
+        tension: 0.1
+    }]
+}
+
+let config = {
+    type: 'line',
+    data: data,
+    options: {}
+}
+
+splineChart = new Chart($("#chart-display"), config)
+{% endif %}
+
+vaccines.change(function () {
+    try {
+        mapDisplay.remove()
+        splineChart.destroy();
+    } catch (e) {}
+    {% if typeOfFilter is not empty %}
+    let typeOfFilter = '{{ typeOfFilter }}';
+    {% else %}
+    let typeOfFilter = vaccines.val();
+    {% endif %}
+    requestData('{{ filter }}', typeOfFilter, startingPeriod.val(), endingPeriod.val(), counties.val());
+})
+counties.change(function () {
+    try {
+        mapDisplay.remove()
+        splineChart.destroy();
+    } catch (e) {}
+    requestData('{{ filter }}', '{{ typeOfFilter }}', startingPeriod.val(), endingPeriod.val(), counties.val());
+});
+startingPeriod.change(function () {
+    try {
+        mapDisplay.remove()
+        splineChart.destroy();
+    } catch (e) {}
+    {% if typeOfFilter is not empty %}
+    let typeOfFilter = '{{ typeOfFilter }}';
+    {% else %}
+    let typeOfFilter = vaccines.val();
+    {% endif %}
+    requestData('{{ filter }}', typeOfFilter, startingPeriod.val(), endingPeriod.val(), counties.val());
+})
+endingPeriod.change(function () {
+    try {
+        mapDisplay.remove()
+        splineChart.destroy();
+    } catch (e) {}
+    {% if typeOfFilter is not empty %}
+    let typeOfFilter = '{{ typeOfFilter }}';
+    {% else %}
+    let typeOfFilter = vaccines.val();
+    {% endif %}
+    requestData('{{ filter }}', typeOfFilter, startingPeriod.val(), endingPeriod.val(), counties.val());
+})
+
+function requestData(statisticFilter, typeOfFilter, startingPeriod, endingPeriod, county)
+{
+    $.ajax({
+        url: '{{path('statistic_get_filtered_data')}}?statisticFilter='+statisticFilter+'&typeOfFilter='+typeOfFilter+'&startingPeriod='+startingPeriod+'&endingPeriod='+endingPeriod+'&county='+county,
+        type: 'GET',
+        dataType: 'json',
+        async: true,
+
+        success: function (result){
+            drawGraphics(result);
+        },
+        error: function (xhr,status,error) {
+            console.log("Error: " + error)
+        }
+    })
+}
+
+function drawGraphics(requestedData)
+{
+    let labels = [];
+    let numberOfCases = [];
+    let numberOfDoses = [];
+    let peopleImmunized = [];
+    let data;
+
+    if (requestedData["filter"] === "byCases") {
+        for (let date in requestedData["data"]) {
+            labels.push(date)
+            numberOfCases.push(requestedData["data"][date])
+        }
+
+        data = {
+            labels: labels,
+            datasets: [{
+                label: (counties.length !== 0 && counties.val() !== '') ?
+                    "Confirmed cases for "+$('#counties option:selected').text()+" county" :
+                    'Number of '+ requestedData['typeOfFilter'] +' cases',
+                data: numberOfCases,
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        }
+    } else if (requestedData["filter"] === 'byVaccines') {
+        for (let date in requestedData["data"]) {
+            labels.push(date)
+            numberOfDoses.push(requestedData["data"][date]['numberOfDosesAdministered'])
+            peopleImmunized.push(requestedData["data"][date]['peopleImmunized'])
+        }
+
+        data = {
+            labels: labels,
+            datasets: [{
+                label: 'Number of doses administered for '+ requestedData['typeOfFilter'] +' vaccine',
+                data: numberOfDoses,
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }, {
+                label: 'Number of people immunized with '+ requestedData['typeOfFilter'] +' vaccine',
+                data: peopleImmunized,
+                fill: false,
+                borderColor: 'rgb(7, 103, 130)',
+                tension: 0.1
+            }]
+        }
+    }
+
+    let config = {
+        type: 'line',
+        data: data,
+        options: {}
+    }
+
+    splineChart = new Chart($("#chart-display"), config)
+}
+</script>
 {% endblock %}

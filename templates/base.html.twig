@@ -55,29 +55,29 @@
                                     <div class="dropdown-content">
                                         <ul class="sub-sub-nav-list">
                                             <li class="nav-item">
-                                                <a href="{{ path('statistic', {statisticFilter: 'byCases', typeOfFilter: 'byActive'}) }}" class="nav-link">
+                                                <a href="{{ path('statistic_index', {statisticFilter: 'byCases', typeOfFilter: 'byActive'}) }}" class="nav-link">
                                                     Active Cases
                                                 </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="{{ path('statistic', {statisticFilter: 'byCases', typeOfFilter: 'byHealed'}) }}" class="nav-link">
+                                                <a href="{{ path('statistic_index', {statisticFilter: 'byCases', typeOfFilter: 'byHealed'}) }}" class="nav-link">
                                                     Healed Cases
                                                 </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="{{ path('statistic', {statisticFilter: 'byCases', typeOfFilter: 'byDeceased'}) }}" class="nav-link">
+                                                <a href="{{ path('statistic_index', {statisticFilter: 'byCases', typeOfFilter: 'byDeceased'}) }}" class="nav-link">
                                                     Deceased Cases
                                                 </a>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="nav-item">
-                                        <a href="{{ path('statistic', {statisticFilter: 'byVaccines'}) }}" class="nav-link">
+                                        <a href="{{ path('statistic_index', {statisticFilter: 'byVaccines'}) }}" class="nav-link">
                                             Vaccines Administered
                                         </a>
                                     </div>
                                     <div class="nav-item">
-                                        <a href="{{ path('statistic', {statisticFilter: 'byIncidence'}) }}" class="nav-link">
+                                        <a href="{{ path('statistic_index', {statisticFilter: 'byIncidence'}) }}" class="nav-link">
                                             Incidence Rate
                                         </a>
                                     </div>
@@ -158,7 +158,9 @@
         <!-- scripts -->
         <script type="text/javascript" src="{{ asset('scripts/jquery-3.6.0.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('scripts/scripts.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        {% block script %}{% endblock %}
     </body>
 </html>

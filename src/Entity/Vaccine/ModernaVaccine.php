@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="App\Repository\Vaccine\ModernaVaccineRepository")
  * @ORM\Table(name="moderna_vaccine")
  */
 class ModernaVaccine extends Vaccines

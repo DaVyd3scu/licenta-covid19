@@ -73,7 +73,7 @@ class UpdateDataService
         if ($lastUpdate) {
             $lastDayData = $geoSpatialData[$numberOfResults - 1];
             $numberOfDaysDiff = $this->compareDates(
-                $lastUpdate,
+                DateTime::createFromFormat('Y-m-d', $lastUpdate->format('Y-m-d')),
                 DateTime::createFromFormat('Y-m-d', $lastDayData["day_case"])
             );
 

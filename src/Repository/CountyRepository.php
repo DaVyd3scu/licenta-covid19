@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\County;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,5 +17,20 @@ class CountyRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, County::class);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCountiesArray(): array
+    {
+        $counties = $this->findAll();
+        $countiesArray = [];
+
+        foreach ($counties as $code => $county) {
+            $countiesArray[] = [$code => $county];
+        }
+
+        return $countiesArray;
     }
 }
