@@ -43,6 +43,7 @@
 
     .sub-nav-list {
         position: absolute;
+        margin-left: -4.5rem;
     }
 
     .sub-sub-nav-list {

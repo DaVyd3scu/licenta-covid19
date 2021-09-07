@@ -19,21 +19,19 @@
 
     <div class="categories-grid">
         <!-- grid item 1 -->
-        <div class="categories-grid-item statistic">
+        <div class="categories-grid-item cases">
             <i class="fas fa-chart-line"></i>
             <a href="{{ path('statistic_index') }}">
-                <h1>Statistical Data</h1>
+                <h1>Statistical Data for Cases</h1>
                 <p>Check the number of cases by applying different filters. This is updated daily.</p>
             </a>
         </div>
         <!-- grid item 2 -->
-        <div class="categories-grid-item predictions">
-            <i class="fas fa-question"></i>
-            <a href="{{ path('prediction') }}">
-                <h1>Predictions</h1>
-                <p>Based on the existing data, predictions can be generated regarding the
-                    number of infected/deceased people and depending on what situation is applied
-                (eg. total lockdown, partial restrictions...)</p>
+        <div class="categories-grid-item vaccines">
+            <i class="fas fa-book-medical"></i>
+            <a href="{{ path('statistic_index', {statisticFilter: 'byVaccines'}) }}">
+                <h1>Vaccines Administered</h1>
+                <p>Displaying information regarding each type of vaccine administered.</p>
             </a>
         </div>
     </div>

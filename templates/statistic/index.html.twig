@@ -2,7 +2,9 @@
 
 {% block title %}Statistical Data{% endblock %}
 
-{% block display_current1 %} current{% endblock %}
+{% block display_current1 %}{% if filter is same as 'byCases' %}{{ 'current' }}{% endif %}{% endblock %}
+{% block display_current2 %}{% if filter is same as 'byVaccines' %}{{ 'current' }}{% endif %}{% endblock %}
+{% block display_current3 %}{% if filter is same as 'byIncidenceRate' %}{{ 'current' }}{% endif %}{% endblock %}
 
 {% block smaller_title %} Graphical evolution of {% endblock %}
 {% block bigger_title %} sars-cov-2 in romania {% endblock %}
